@@ -31,7 +31,9 @@
   --font-display: "Nunito", "Zen Maru Gothic", sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --content-max: 42rem;
+  --content-max: 40rem;
+  /* ヘッダー実測に近い値（ padding上下 + ロゴ最大 + 下線 ）＋ safe-area */
+  --site-header-offset: calc(0.75rem + 0.75rem + 2.45rem + 2px + var(--safe-top));
 }
 
 *,
@@ -91,16 +93,17 @@ body {
   top: 0;
   z-index: 50;
   flex-shrink: 0;
-  background: var(--surface);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: calc(0.55rem + var(--safe-top)) 1rem 0.55rem;
+  background: linear-gradient(180deg, #fffefb 0%, var(--surface) 55%, #fff9f2 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(255, 200, 160, 0.45);
+  padding: calc(0.75rem + var(--safe-top)) 1rem 0.75rem;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 18px -6px rgba(58, 50, 40, 0.1), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
 }
 
 .brand {
@@ -123,7 +126,7 @@ body {
 
 .brand-logo {
   display: block;
-  height: clamp(28px, 7.5vw, 36px);
+  height: clamp(30px, 7.5vw, 38px);
   width: auto;
   max-width: min(9.5rem, 48vw);
   object-fit: contain;
@@ -197,7 +200,7 @@ main {
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: visible;
-  scroll-margin-top: calc(3.65rem + var(--safe-top));
+  scroll-margin-top: var(--site-header-offset);
   padding: 0;
   margin: 0;
   background: transparent;
@@ -252,12 +255,12 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: clamp(22rem, 72dvh, 38rem);
+  min-height: clamp(30rem, 82dvh, 48rem);
   box-sizing: border-box;
 }
 
 .section-card[id] {
-  scroll-margin-top: calc(3.65rem + var(--safe-top));
+  scroll-margin-top: var(--site-header-offset);
 }
 
 /* ヒーロー */
@@ -363,6 +366,44 @@ main {
   max-height: 38vw;
   object-fit: contain;
   filter: drop-shadow(0 12px 24px rgba(255, 140, 90, 0.3)) drop-shadow(0 4px 0 rgba(255, 220, 180, 0.5));
+}
+
+.hero-cover-visuals {
+  position: relative;
+  z-index: 1;
+  margin: 1.35rem auto 0;
+  padding: 1rem 0.5rem 0.25rem;
+  max-width: min(42rem, 100%);
+  width: 100%;
+}
+
+.hero-cover-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-cover-row--staff img {
+  width: clamp(2.35rem, 8vw, 3.1rem);
+  height: clamp(2.35rem, 8vw, 3.1rem);
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 10px rgba(58, 50, 40, 0.12), 0 0 0 1px rgba(255, 200, 160, 0.45);
+  background: var(--surface);
+}
+
+@media (min-width: 480px) {
+  .hero-cover-visuals {
+    margin-top: 1.5rem;
+    padding-top: 1.15rem;
+  }
+
+  .hero-cover-row {
+    gap: 0.55rem;
+  }
 }
 
 .hero h1,
@@ -949,6 +990,130 @@ main {
   transform: scale(0.98);
 }
 
+/* PC: 目次を右に常時表示（閉じたときだけ隠す／ボタン位置と挙動を一致） */
+@media (min-width: 1024px) {
+  :root {
+    --content-max: min(80vw, 46rem);
+    --toc-panel-width: min(19.5rem, 24vw);
+    --toc-main-gap: 1.35rem;
+    --toc-desktop-inline-pad: 1.25rem;
+    /* padding 上下 + ロゴ最大 + 下線 + safe */
+    --site-header-offset: calc(0.95rem + 0.95rem + 3.2rem + 2px + var(--safe-top));
+  }
+
+  .site-header {
+    transition: padding-right 0.22s ease, padding-left 0.22s ease;
+    padding: calc(0.95rem + var(--safe-top)) 1.25rem 0.95rem;
+    border-bottom-width: 2px;
+  }
+
+  .brand-logo {
+    height: clamp(36px, 4vw, 50px);
+    max-width: min(12rem, 36vw);
+  }
+
+  body:not(.toc-sidebar-collapsed) .brand {
+    max-width: min(18rem, 42vw);
+  }
+
+  body:not(.toc-sidebar-collapsed) .site-header {
+    padding-right: calc(
+      var(--toc-panel-width) + var(--toc-main-gap) + var(--toc-desktop-inline-pad)
+    );
+  }
+
+  .main-content {
+    transition: margin-right 0.22s ease, width 0.22s ease;
+    box-sizing: border-box;
+  }
+
+  body:not(.toc-sidebar-collapsed) .main-content {
+    margin-right: calc(var(--toc-panel-width) + var(--toc-main-gap));
+    margin-left: 0;
+    width: calc(100% - var(--toc-panel-width) - var(--toc-main-gap));
+  }
+
+  body.toc-sidebar-collapsed .main-content {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  body:not(.toc-sidebar-collapsed) .btn-toc {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .toc-overlay {
+    position: fixed;
+    right: 0;
+    left: auto;
+    top: var(--site-header-offset);
+    bottom: 0;
+    width: var(--toc-panel-width);
+    z-index: 40;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    transition: transform 0.28s cubic-bezier(0.34, 1.15, 0.64, 1), opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  .toc-overlay .toc-panel {
+    pointer-events: auto;
+  }
+
+  .toc-overlay.toc-overlay--collapsed {
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .toc-overlay:not(.toc-overlay--collapsed) {
+    transform: translateX(0);
+  }
+
+  .toc-panel .toc-close {
+    top: 0.5rem;
+  }
+
+  .toc-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform: translateX(0);
+    border-radius: var(--radius) 0 0 var(--radius);
+    border-right: none;
+    border-left: 3px solid var(--border-cute);
+    box-shadow: -6px 0 28px -6px rgba(58, 50, 40, 0.12);
+    padding-top: 0.65rem;
+  }
+
+  .toc-overlay.is-open .toc-panel {
+    transform: translateX(0);
+  }
+
+  .content-flow {
+    padding-left: var(--toc-desktop-inline-pad);
+    padding-right: var(--toc-desktop-inline-pad);
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .toc-overlay,
+  .site-header,
+  .main-content {
+    transition: none;
+  }
+}
+
 .site-footer {
   max-width: var(--content-max);
   margin: 0 auto;
@@ -975,7 +1140,7 @@ main {
 
 @media (min-width: 720px) {
   :root {
-    --content-max: 43rem;
+    --content-max: 41rem;
   }
 
   body {
@@ -983,19 +1148,8 @@ main {
   }
 }
 
-@media (min-width: 1024px) {
-  :root {
-    --content-max: min(82vw, 52rem);
-  }
-
-  .content-flow {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-}
-
 @media (min-width: 1440px) {
   :root {
-    --content-max: min(84vw, 56rem);
+    --content-max: min(82vw, 50rem);
   }
 }
