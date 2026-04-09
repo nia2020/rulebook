@@ -31,6 +31,7 @@
   --font-display: "Nunito", "Zen Maru Gothic", sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max: 42rem;
 }
 
 *,
@@ -178,7 +179,7 @@ main {
 /* 単一カラム本文（本の装丁・ページ背景は使わない） */
 .content-flow {
   width: 100%;
-  max-width: 42rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0.75rem 1rem calc(2rem + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
@@ -949,7 +950,7 @@ main {
 }
 
 .site-footer {
-  max-width: 40rem;
+  max-width: var(--content-max);
   margin: 0 auto;
   padding: 0 1.1rem 2rem;
   text-align: center;
@@ -973,11 +974,28 @@ main {
 }
 
 @media (min-width: 720px) {
+  :root {
+    --content-max: 43rem;
+  }
+
   body {
     font-size: 1.02rem;
   }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --content-max: min(82vw, 52rem);
+  }
 
   .content-flow {
-    max-width: 44rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --content-max: min(84vw, 56rem);
   }
 }
