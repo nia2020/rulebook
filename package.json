@@ -1,8 +1,0 @@
-{
-  "name": "popup-geeks-guidelines",
-  "private": true,
-  "scripts": {
-    "build": "exit 0",
-    "start": "python3 -m http.server 3000 --bind 127.0.0.1"
-  }
-}
