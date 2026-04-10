@@ -398,6 +398,13 @@ main {
   display: block;
 }
 
+.hero-cover-row--staff-single img {
+  width: min(100%, 32rem);
+  height: auto;
+  max-height: clamp(7rem, 36vw, 13rem);
+  object-fit: contain;
+}
+
 .hero-cover-row--character img {
   width: clamp(2.6rem, 10vw, 3.5rem);
   height: clamp(2.6rem, 10vw, 3.5rem);
