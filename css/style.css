@@ -406,6 +406,12 @@ main {
   display: block;
 }
 
+.hero-cover-row--character-single img {
+  width: min(100%, 18rem);
+  height: auto;
+  max-height: clamp(8rem, 38vw, 14rem);
+}
+
 @media (min-width: 480px) {
   .hero-cover-visuals {
     margin-top: 1.5rem;
