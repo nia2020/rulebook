@@ -596,6 +596,18 @@ main {
   margin-bottom: 0;
 }
 
+/* 指定引用のマーカー風ハイライト */
+.passage-mark {
+  position: relative;
+  font-weight: inherit;
+  background-color: rgba(255, 236, 179, 0.55);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 0.15em;
+  padding: 0.03em 0.08em;
+  box-shadow: inset 0 -0.14em 0 rgba(255, 143, 107, 0.38);
+}
+
 /* M.V.V.・行動指針のキャッチコピー */
 .section-card .catch-copy {
   margin: 0.5rem 0 1.15rem;
@@ -808,6 +820,18 @@ main {
   margin-top: 1.15rem;
 }
 
+/* UNIT VISION：教育Unitバナーは控えめなサイズに。囲み枠は付けない */
+#unit-vision .content-figure--mvv {
+  max-width: min(100%, 30rem);
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  overflow: visible;
+}
+
 .content-figure--portrait {
   max-width: 280px;
   margin-left: auto;
@@ -835,6 +859,16 @@ main {
   vertical-align: middle;
 }
 
+/* VALUE 各項（本文 p.6–9）：Trust / Experience / Growth / Co-Creation のイラスト */
+#trust .value-figure,
+#experience .value-figure,
+#growth .value-figure,
+#cocreation .value-figure {
+  max-width: min(100%, 30rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .unit-brand {
   margin: 1.1rem 0 0;
   padding: 1rem 1.25rem;
@@ -851,6 +885,14 @@ main {
   max-width: min(260px, 85%);
   height: auto;
   object-fit: contain;
+}
+
+#unit-vision .unit-brand {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 
 /* 表 */
