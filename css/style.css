@@ -181,6 +181,7 @@ main {
 
 /* 単一カラム本文（本の装丁・ページ背景は使わない） */
 .content-flow {
+  counter-reset: doc-page 0;
   width: 100%;
   max-width: var(--content-max);
   margin: 0 auto;
@@ -192,6 +193,7 @@ main {
 }
 
 .page-slide {
+  counter-increment: doc-page;
   flex: 0 0 auto;
   width: 100%;
   min-width: 0;
@@ -209,8 +211,24 @@ main {
   border-radius: 0;
 }
 
-.page-slide::after {
-  content: none;
+/* 表紙は番号なし。本文は 1 から通し（冊子風） */
+.page-slide.page-slide--hero {
+  counter-increment: none;
+}
+
+.page-slide:not(.page-slide--hero)::after {
+  content: counter(doc-page);
+  display: block;
+  text-align: right;
+  margin-top: 0.4rem;
+  padding-right: 0.15rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 .page-slide--hero {
